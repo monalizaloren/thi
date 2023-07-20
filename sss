@@ -1,70 +1,46 @@
-var SpeechRecognition = window.webkitSpeechRecognition;
-  
-var recognition = new SpeechRecognition();
+<html>
+    <head>
+       <title>App minha selfie</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-var Textbox = document.getElementById("textbox"); 
-// id="textbox"
-function start()
-{
-    Textbox.innerHTML = ""; 
-    recognition.start();
-} 
+<link href="style.css" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"></script>
+
+</head>
  
-recognition.onresult = function(event) {
+<body>
+    <div class="container">
+    <center>
+        <a href="" id="link" download="myselfie.png"></a>
+        <h1>App Selfie por voz 
+        <img id="logo_img" src="selfie.jpeg">
+        </h1>
+        <hr>
+        <h4 style="color:red;">Pressione permitir assim que o pop-up for exibido. Depois de dar um comando de voz</h4>
+        
+        <div class="form-group">
+        <h3>Diga "tire minha selfie"</h3>
+        <label>Sua saída de voz : </label>
+        <textarea class="form-control" id="textbox" readonly="true"></textarea>
+        </div>
 
- console.log(event); 
+        <button class="btn btn-primary" onclick="start()">Iniciar</button>
+        <p>Pressione o botão Iniciar</p>
 
-var Content = event.results[0][0].transcript;
+        <label>Sua webcam : </label>
+        <div id="camera"></div>
+        
+        <br>
 
-    Textbox.innerHTML = Content;
-    console.log(Content);
-      if(Content =="tire minha selfie")
-      {
-        console.log("tirando selfie --- ");
-        speak();
-      }
-}
+        <label>Sua selfie será exibida aqui: </label>
+        <div id="result" ></div>
+    </center>
+    </div>
 
-
-function speak(){
-    var synth = window.speechSynthesis;
-
-    speak_data = "Tirando sua selfie em 5 segundos";
-
-    var utterThis = new SpeechSynthesisUtterance(speak_data);
-
-    synth.speak(utterThis);
-
-    Webcam.attach(camera);
-
-    setTimeout(function()
-    { 
-        take_selfie(); 
-        save();
-    }, 5000);
-}
-
- 
-camera = document.getElementById("camera");
-Webcam.set({
-    width:360,
-    height:250,
-    image_format : 'jpeg',
-    jpeg_quality:90
-});
-
-function take_selfie()
-{
-    Webcam.snap(function(data_uri) {
-        document.getElementById("result").innerHTML = '<img id="selfie_image" src="'+data_uri+'"/>';
-    });
-}
-
-
-function save()
-{
-  link = document.getElementById("link");
-  image = document.getElementById("selfie_image").src ;
-  link.href = image;
-  link.click();
-}
+    <script src="main.js"></script>
+</body>
+</html>
